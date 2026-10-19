@@ -163,6 +163,9 @@ body.home { --black: #2d2c2c; background: var(--white); color: var(--black); }
   background-size: 100% 1px;
 }
 
+/* Избранный проект для телефона (на компьютере он виден в левой панели) */
+.featured-mobile { display: none; }
+
 /* Таблица проектов */
 .projects {
   list-style: none;
@@ -437,6 +440,39 @@ body.project { background: var(--black); color: var(--white); }
   .preview { display: none; }
 
   .side { padding: 14px 16px 32px; }
+
+  /* Избранный проект — горизонтальная лента, листается пальцем */
+  .featured-mobile {
+    display: block;
+    margin: 28px -16px 0;
+  }
+  .featured-mobile-head {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 16px 10px;
+    font-size: 13px;
+  }
+  .featured-mobile-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0 16px 4px;
+    scrollbar-width: none;
+  }
+  .featured-mobile-strip::-webkit-scrollbar { display: none; }
+  .featured-mobile-strip a {
+    flex: 0 0 62%;
+    scroll-snap-align: start;
+  }
+  .featured-mobile-strip img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+  .featured-mobile + .projects { margin-top: 28px; }
+  /* на телефоне нет панели превью, поэтому «активная» строка не подчёркивается */
+  .projects a.is-active .title::after { transform: scaleX(0); }
 
   .projects a {
     grid-template-columns: 1fr 1.6fr 0.6fr;

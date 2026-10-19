@@ -184,9 +184,11 @@
       grid.row.classList.add("is-active");
     }
   }
+  // Проект с featured: true виден сразу при входе; когда курсор уходит — возвращаемся к нему
+  let featuredGrid = null;
   const scheduleHide = () => {
     clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => show(null), 350);
+    hideTimer = setTimeout(() => show(featuredGrid), 350);
   };
 
   projects.forEach((p) => {
@@ -259,7 +261,30 @@
     row.addEventListener("mouseenter", () => show(grid));
     row.addEventListener("focus", () => show(grid));
     list.appendChild(li);
+
+    if (p.featured && !featuredGrid) {
+      featuredGrid = grid;
+      addMobileFeatured(p, href);
+    }
   });
+
+  // На телефоне левой панели нет — показываем избранный проект лентой под приветствием
+  function addMobileFeatured(p, href) {
+    const box = document.createElement("section");
+    box.className = "featured-mobile";
+    const picks = p.preview || p.media.map((_, i) => i + 1);
+    box.innerHTML =
+      `<a class="featured-mobile-head" href="${href}"><span>${p.title}</span><span>${p.year}</span></a>` +
+      `<div class="featured-mobile-strip">` +
+      picks
+        .filter((n) => p.media[n - 1])
+        .map((n) => `<a href="${href}#m-${n}"><img src="${p.media[n - 1].src}" alt="${p.title}" loading="lazy" decoding="async"></a>`)
+        .join("") +
+      `</div>`;
+    list.before(box);
+  }
+
+  if (featuredGrid) show(featuredGrid);
 
   list.addEventListener("mouseleave", scheduleHide);
   preview.addEventListener("mouseleave", scheduleHide);

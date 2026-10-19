@@ -45,6 +45,30 @@ const SMM_ORDER = [
 // [TODO] Годы и описания ниже — черновики. Поправь их под реальные факты.
 window.PROJECTS = [
   {
+    id: "lexus-burger-king", category: "Social Media, Ads", title: "Ads", year: "2026",
+    cover: "assets/ads/01.jpg",
+    background: "#2d2c2c", // тёмный графит — синий Lexus и красно-оранжевый Burger King на нём особенно яркие
+    // Если добавить featured: true, проект будет открыт слева сразу при входе на сайт.
+    // На главной — лента 4×2: верхний ряд Lexus и первый пост Burger King, нижний — Burger King
+    previewPack: 4,
+    preview: [1, 2, 3, 4, 5, 6, 7, 8],
+    description:
+      "Social media posts for Lexus Yerevan and Burger King. For Lexus — a calm, premium visual language: " +
+      "CASCO insurance, safety technologies and a service offer on brake parts. For Burger King — bold, playful " +
+      "typography in the brand’s warm palette: the Whopper, shrimps, “The Best Burger” and delivery partners.",
+    credits: [],
+    media: [
+      img("ads/01.jpg"), // Lexus — CASCO
+      img("ads/02.jpg"), // Lexus — технологии безопасности
+      img("ads/03.jpg"), // Lexus — скидка 10% на тормозные детали
+      img("ads/04.jpg"), // Burger King — The Best Burger
+      img("ads/05.jpg"), // Burger King — доставка
+      img("ads/06.jpg"), // Burger King — Appetizing
+      img("ads/07.jpg"), // Burger King — Whopper
+      img("ads/08.jpg"), // Burger King — Shrimps
+    ],
+  },
+  {
     id: "posters", category: "Poster", title: "Posters", year: "2026",
     cover: "assets/posters/arshaluys.jpg",
     background: "#2d2c2c", // тёмный графит — красно-чёрно-белые постеры на нём звучат сильнее
