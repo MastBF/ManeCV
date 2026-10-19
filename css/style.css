@@ -1,0 +1,463 @@
+/* ---------- Base ---------- */
+:root {
+  --black: #000;
+  --white: #fff;
+  --grey: #8c8c8c;
+  --font: "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* Всё масштабируется от ширины экрана, как в оригинале */
+  --intro-size: max(17px, 2vw);
+  --row-size: max(11px, 0.95vw);
+  --text-size: max(12px, 1.05vw);
+  --pad: max(14px, 1.5vw);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img, video { display: block; max-width: 100%; }
+::selection { background: #a2a2a2; }
+
+/* ---------- Home ---------- */
+/* На главной вместо чистого чёрного — мягкий тёплый графит */
+body.home { --black: #2d2c2c; background: var(--white); color: var(--black); }
+
+.home-layout {
+  display: grid;
+  grid-template-columns: 54.6% 1fr;
+  min-height: 100vh;
+}
+
+/* Левая чёрная панель с превью при наведении */
+.preview {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background: var(--black);
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+/* Коллаж уменьшенных картинок проекта.
+   Позиции, размеры и поворот каждой картинки считает js/home.js */
+.preview-grid {
+  position: absolute;
+  inset: 0;
+  padding: max(28px, 3.5vw); /* поле по краям: сюда ничего не заходит, поэтому ничего не обрезается */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.preview-grid.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.thumb {
+  position: absolute;
+  transform: rotate(var(--rot, 0deg));
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  /* тонкая рамка и мягкая тень, как у листов, разложенных на столе */
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+.thumb img,
+.thumb video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Видео-заставка проекта: занимает панель целиком, без обрезки */
+.preview-video {
+  position: absolute;
+  inset: max(28px, 3.5vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.preview-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* «Своя композиция» (марки): у картинок прозрачные края, поэтому тень — по контуру */
+.is-free .thumb {
+  box-shadow: none;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+.is-free .thumb:hover {
+  box-shadow: none;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
+}
+/* ячейка с заданной высотой — фото заполняет её целиком (с обрезкой по краям) */
+.is-free .thumb.is-crop img,
+.is-free .thumb.is-crop video {
+  object-fit: cover;
+}
+
+/* «Пак» — плитки вплотную друг к другу, как лента в Instagram */
+.is-pack .thumb {
+  box-shadow: none;
+}
+.is-pack .thumb img,
+.is-pack .thumb video {
+  object-fit: cover;
+}
+
+/* При наведении картинка выпрямляется, слегка увеличивается и ложится поверх остальных */
+.thumb:hover {
+  z-index: 100 !important;
+  transform: rotate(0deg) scale(1.1);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 14px 34px rgba(0, 0, 0, 0.25);
+}
+
+/* Правая белая часть */
+.side {
+  position: relative;
+  padding: calc(var(--pad) * 0.7) calc(var(--pad) * 1.2) var(--pad) var(--pad);
+}
+
+.intro {
+  position: relative;
+  z-index: 1;
+  font-size: var(--intro-size);
+  line-height: 1.2;
+  font-weight: 400;
+  margin: 0;
+}
+.intro p {
+  margin: 0;
+  letter-spacing: -0.012em;
+  /* строки мягко проявляются по очереди при загрузке */
+  animation: intro-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+@keyframes intro-in {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+/* «Hi, I'm» — серым, имя — основным цветом */
+.intro-hello { color: var(--grey); }
+.intro-name { color: var(--black); font-weight: 500; }
+
+/* Контакты чуть отделены от текста о себе */
+.intro .intro-contact { margin-top: 0.45em; }
+
+/* Ссылки: серые, при наведении темнеют, снизу «прорисовывается» тонкая линия */
+.intro-link {
+  color: var(--grey);
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px;
+  padding-bottom: 1px;
+  transition: color 0.25s ease, background-size 0.35s ease;
+}
+.intro-link:hover {
+  color: var(--black);
+  background-size: 100% 1px;
+}
+
+/* Таблица проектов */
+.projects {
+  list-style: none;
+  margin: max(24px, 2.5vw) 0 0;
+  padding: 0;
+}
+
+.projects a {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  height: max(26px, 2.75vw);
+  border-top: 1px solid var(--black);
+  font-size: var(--row-size);
+}
+
+.projects .cat { text-align: left; }
+.projects .year { text-align: right; }
+.projects .title {
+  position: relative;
+  justify-self: center;
+  color: var(--grey);
+  transition: color 0.15s ease;
+}
+.projects .title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.1em);
+  height: 0.65em;
+  background: var(--black);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+/* Наведение: название чернеет, под ним чёрная плашка */
+.projects a:hover .title,
+.projects a.is-active .title,
+.projects a:focus-visible .title { color: var(--black); }
+.projects a:hover .title::after,
+.projects a.is-active .title::after,
+.projects a:focus-visible .title::after { transform: scaleX(1); }
+.projects a:focus-visible { outline: none; }
+
+/* ---------- Project page ---------- */
+body.project { background: var(--black); color: var(--white); }
+
+.project-layout {
+  display: grid;
+  grid-template-columns: 65.6% 1fr;
+  min-height: 100vh;
+}
+
+.home-link {
+  position: fixed;
+  top: calc(var(--pad) * 0.7);
+  left: calc(var(--pad) * 1.6);
+  z-index: 10;
+  font-size: max(14px, 1.6vw);
+  color: var(--white);
+  mix-blend-mode: difference;
+}
+.home-link:hover { opacity: 0.6; }
+
+/* ---------- Лента работ на странице проекта ---------- */
+:root {
+  --gallery-pad: max(16px, 2.4vw);
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.media {
+  display: flex;
+  flex-direction: column;
+  gap: max(20px, 3vw);
+  padding: calc(var(--gallery-pad) * 2.2) var(--gallery-pad) 18vh;
+}
+
+/* Одна работа: целиком помещается в экран, стоит по центру колонки */
+.item {
+  position: relative;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  cursor: zoom-in;
+}
+.item img,
+.item video {
+  display: block;
+  min-width: 0;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: calc(100vh - var(--gallery-pad) * 2);
+  object-fit: contain;
+  transition: transform 0.7s var(--ease-out), opacity 0.4s ease, filter 0.4s ease;
+}
+
+/* Номер работы — тихо в углу, проявляется при наведении */
+.item-num {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: max(11px, 0.85vw);
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+/* Наведение: работа чуть приближается */
+.item:hover img,
+.item:hover video { transform: scale(1.02); }
+.item:hover .item-num { opacity: 0.7; transform: none; }
+
+/* Плавное появление при прокрутке */
+.reveal {
+  opacity: 0;
+  transform: translateY(56px);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.9s ease var(--d, 0s), transform 1.1s var(--ease-out) var(--d, 0s);
+}
+
+/* Все работы: ступенчатая сетка по несколько в ряд, каждая в своих пропорциях */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 40%), 1fr));
+  gap: max(12px, 1.4vw);
+  align-items: start;
+}
+.media-grid.is-staggered { padding-bottom: max(48px, 4.2vw); }
+.media-grid .item {
+  translate: 0 var(--shift, 0%); /* каждая вторая колонка опущена */
+}
+.media-grid .item img,
+.media-grid .item video {
+  width: 100%;
+  max-height: none;
+}
+.media-grid .item-num { top: auto; bottom: -1.6em; }
+
+/* В сетке при наведении остальные работы притухают */
+.media-grid:hover .item img { opacity: 0.35; filter: grayscale(0.5); }
+.media-grid .item:hover { z-index: 2; }
+.media-grid .item:hover img { opacity: 1; filter: none; transform: scale(1.06); }
+
+/* ---------- Просмотр на весь экран ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.95);
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.lightbox[hidden] { display: none; }
+.lightbox.is-open { opacity: 1; }
+
+.lb-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7vh 7vw;
+}
+.lb-stage img,
+.lb-stage video {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  animation: lb-in 0.4s var(--ease-out);
+}
+@keyframes lb-in {
+  from { opacity: 0; transform: scale(0.96); }
+}
+
+.lb-prev,
+.lb-next,
+.lb-close {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+.lb-prev:hover,
+.lb-next:hover,
+.lb-close:hover { opacity: 1; }
+
+.lb-prev,
+.lb-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 24px;
+  font-size: max(22px, 2vw);
+}
+.lb-prev { left: 1vw; }
+.lb-next { right: 1vw; }
+.is-single .lb-prev,
+.is-single .lb-next { display: none; }
+
+.lb-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: calc(var(--pad) * 0.7) calc(var(--pad) * 1.2) 0 calc(var(--pad) * 1.6);
+  font-size: max(14px, 1.6vw);
+  font-variant-numeric: tabular-nums;
+}
+
+.info {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--pad) * 0.7) calc(var(--pad) * 1.2) var(--pad) var(--pad);
+}
+
+.info-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: max(14px, 1.6vw);
+  margin-bottom: max(16px, 1.8vw);
+}
+.info-head h1 { font-size: inherit; font-weight: 400; margin: 0; }
+
+.info .desc,
+.info .credits {
+  font-size: var(--text-size);
+  line-height: 1.4;
+  margin: 0;
+}
+.info .credits { margin-top: max(24px, 3vw); }
+.info .credits p { margin: 0; }
+
+.next-link {
+  display: inline-block;
+  margin-top: max(32px, 4vw);
+  font-size: var(--text-size);
+  color: var(--grey);
+}
+.next-link:hover { color: var(--white); }
+
+.not-found {
+  padding: 30vh var(--pad);
+  font-size: var(--intro-size);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 767px) {
+  :root { --pad: 16px; }
+
+  .home-layout { display: block; }
+  .preview { display: none; }
+
+  .side { padding: 14px 16px 32px; }
+
+  .projects a {
+    grid-template-columns: 1fr 1.6fr 0.6fr;
+    column-gap: 10px;
+    height: auto;
+    min-height: 44px;
+    padding: 9px 0;
+    line-height: 1.25;
+  }
+  .projects .title { color: var(--black); text-align: center; }
+
+  .project-layout { display: flex; flex-direction: column-reverse; }
+  .home-link { position: sticky; top: 0; display: block; padding: 14px 16px; background: var(--black); mix-blend-mode: normal; }
+  .info { position: static; height: auto; overflow: visible; padding: 4px 16px 28px; }
+  .media { padding: 4px 12px 12vh; gap: 16px; }
+  .lb-prev, .lb-next { padding: 14px; }
+}
+
+/* Кто не любит анимацию — без анимации */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+  .intro p { animation: none; }
+  .item img, .item video, .thumb { transition: none; }
+}

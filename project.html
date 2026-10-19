@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="project">
+  <a class="home-link" href="index.html">Home</a>
+
+  <div class="project-layout">
+    <div class="media" id="media"></div>
+
+    <aside class="info">
+      <div class="info-head">
+        <h1 id="title"></h1>
+        <span id="year"></span>
+      </div>
+      <p class="desc" id="desc"></p>
+      <div class="credits" id="credits"></div>
+      <a class="next-link" id="next" href="#"></a>
+    </aside>
+  </div>
+
+  <!-- Просмотр работы на весь экран -->
+  <div class="lightbox" id="lightbox" hidden>
+    <div class="lb-stage"></div>
+    <button class="lb-prev" type="button" aria-label="Previous">&larr;</button>
+    <button class="lb-next" type="button" aria-label="Next">&rarr;</button>
+    <div class="lb-bar">
+      <span class="lb-count"></span>
+      <button class="lb-close" type="button">Close</button>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/sizes.js"></script>
+  <script src="js/project.js"></script>
+</body>
+</html>
