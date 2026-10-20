@@ -68,14 +68,55 @@
     return fig;
   });
 
+  // Раскладка «каменной кладкой» (pageLayout: "masonry" в data.js):
+  // каждая следующая работа встаёт в самую короткую колонку — без дыр между рядами.
+  // Подходит проектам, где работы очень разной формы.
+  if (p.pageLayout === "masonry") {
+    const wall = document.createElement("div");
+    wall.className = "media-masonry";
+    media.appendChild(wall);
+
+    // пропорция высота/ширина каждой работы — из sizes.js (для видео — по кадру-обложке)
+    const ratio = (m) => {
+      const s = SIZES[m.src] || (m.poster && SIZES[m.poster]);
+      return s ? s[1] / s[0] : 1;
+    };
+    let current = 0;
+    function build() {
+      const W = wall.clientWidth || media.clientWidth;
+      const gap = parseFloat(getComputedStyle(wall).columnGap) || 16;
+      const min = Math.min(220, W * 0.4);
+      const cols = Math.max(1, Math.floor((W + gap) / (min + gap)));
+      if (cols === current) return;
+      current = cols;
+      wall.innerHTML = "";
+      const columns = Array.from({ length: cols }, (_, c) => {
+        const col = document.createElement("div");
+        col.className = "masonry-col";
+        col.style.setProperty("--d", `${(c * 0.08).toFixed(2)}s`); // волна при появлении
+        wall.appendChild(col);
+        return col;
+      });
+      const heights = new Array(cols).fill(0);
+      figures.forEach((f, i) => {
+        const c = heights.indexOf(Math.min(...heights));
+        columns[c].appendChild(f);
+        heights[c] += ratio(p.media[i]) + gap / ((W - gap * (cols - 1)) / cols);
+      });
+    }
+    build();
+    window.addEventListener("resize", build);
+  }
+
   // Все работы проекта — в одной ступенчатой сетке, по несколько в ряд.
   // Полный размер — по клику, в просмотре на весь экран.
   const grid = document.createElement("div");
   grid.className = "media-grid";
+  const useGrid = p.pageLayout !== "masonry";
   // Работы с одинаковым stack в data.js лежат в одной ячейке, одна под другой
   // (например, два невысоких ролика занимают место одного вертикального)
   const stacks = {};
-  figures.forEach((f, i) => {
+  if (useGrid) figures.forEach((f, i) => {
     const key = p.media[i].stack;
     if (!key) return grid.appendChild(f);
     if (!stacks[key]) {
@@ -85,10 +126,11 @@
     }
     stacks[key].appendChild(f);
   });
-  media.appendChild(grid);
+  if (useGrid) media.appendChild(grid);
 
   // Ступеньки: каждая вторая колонка сетки опущена вниз
   function stagger() {
+    if (!useGrid) return;
     const cols = getComputedStyle(grid).gridTemplateColumns.split(" ").length;
     [...grid.children].forEach((f, i) => {
       const col = i % cols;

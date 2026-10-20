@@ -306,6 +306,32 @@ body.project { background: var(--black); color: var(--white); }
 .media-grid .item {
   translate: 0 var(--shift, 0%); /* каждая вторая колонка опущена */
 }
+/* «Каменная кладка» (pageLayout: "masonry"): колонки, работы встают в самую короткую */
+.media-masonry {
+  display: flex;
+  align-items: flex-start;
+  column-gap: max(12px, 1.4vw);
+}
+.masonry-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: max(12px, 1.4vw);
+}
+.media-masonry .item img,
+.media-masonry .item video {
+  width: 100%;
+  max-height: none;
+}
+.media-masonry .item-num { top: auto; bottom: -1.6em; }
+/* при наведении остальные работы притухают, как в обычной сетке */
+.media-masonry:hover .item img,
+.media-masonry:hover .item video { opacity: 0.35; filter: grayscale(0.5); }
+.media-masonry .item:hover { z-index: 2; }
+.media-masonry .item:hover img,
+.media-masonry .item:hover video { opacity: 1; filter: none; transform: scale(1.04); }
+
 /* Несколько работ в одной ячейке — одна под другой */
 .item-stack {
   display: flex;
