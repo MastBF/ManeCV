@@ -87,7 +87,8 @@
       const maxX = Math.max(...spots.map((s) => s.x + s.w / 2));
       const minY = Math.min(...spots.map((s) => s.y - s.h / 2));
       const maxY = Math.max(...spots.map((s) => s.y + s.h / 2));
-      const k = Math.min(W / (maxX - minX), H / (maxY - minY)) * 0.92;
+      // previewScale в data.js — какую часть панели занимает композиция (по умолчанию 0.92)
+      const k = Math.min(W / (maxX - minX), H / (maxY - minY)) * (grid.freeScale || 0.92);
       const x0 = pad + (W - (maxX - minX) * k) / 2;
       const y0 = pad + (H - (maxY - minY) * k) / 2;
       items.forEach((t, i) => {
@@ -204,6 +205,7 @@
     grid.pack = p.previewPack || 0; // число колонок в «паке» или 0 — обычный коллаж
     grid.free = p.previewLayout || null; // своя композиция: [{ n, x, y, w, h?, r? }]
     if (grid.free) grid.classList.add("is-free");
+    grid.freeScale = p.previewScale || 0;
     grid.bg = p.background || site.previewBackground || "#fff";
     grid.chaos = p.chaos ?? site.previewChaos ?? 0.6;
 

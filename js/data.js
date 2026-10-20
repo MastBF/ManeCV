@@ -50,9 +50,7 @@ window.PROJECTS = [
     cover: "assets/posters/arshaluys.jpg",
     background: "#2d2c2c", // тёмный графит — красно-чёрно-белые постеры на нём звучат сильнее
     description:
-      "A collection of posters about Armenia: its Soviet modernist monuments and buildings, mountains, theatre, food and memory. " +
-      "Each poster combines archival or personal photography with bold typography and hand-drawn Armenian lettering, " +
-      "using a restrained palette of black, white and red.",
+      "A poster series inspired by Armenian culture, art, and heritage, reinterpreted through a contemporary visual language.",
     credits: [],
     media: [
       "arshaluys", "rossia-cinema", "gyumri", "zvartnots", "lernayin-par",
@@ -71,11 +69,10 @@ window.PROJECTS = [
     cover: "assets/ads/01.jpg",
     background: "#2d2c2c", // тёмный графит — синий Lexus и красно-оранжевый Burger King на нём особенно яркие
     description:
-      "Social media design for brands from different industries: Lexus Yerevan and Burger King, " +
-      "Manor Matrix (data and outsourcing), Rafael and iMachinery (construction machinery), " +
-      "Meranjson (children’s clothing) and Innwork (coworking). " +
-      "For each brand I built a recognizable feed with its own grid, typography and color system, " +
-      "and designed posts, announcements and promotional campaigns in Armenian and English.",
+      "Social media design for diverse brands, including major companies like Lexus Yerevan and Burger King, " +
+      "as well as businesses in technology, construction, fashion, and coworking. " +
+      "Each project features a distinctive visual identity, consistent feed design, " +
+      "and engaging promotional content in Armenian and English.",
     credits: [],
     // Порядок на странице проекта: сначала Lexus и Burger King (assets/ads/),
     // дальше остальные бренды (номера файлов из assets/smm/ — см. SMM_ORDER выше).
@@ -91,8 +88,13 @@ window.PROJECTS = [
       ...SMM_ORDER.map((n) => img(`smm/${String(n).padStart(2, "0")}.jpg`)),
     ],
     // На главной при наведении — лента 4×2 из постов Lexus и Burger King (первые 8 работ выше).
+    // Порядок перемешан, чтобы цвета не собирались в кучу: холодные Lexus стоят «в шахматку»
+    // между тёплыми Burger King, красные и оранжевые посты не соседствуют.
     previewPack: 4,
-    preview: [1, 2, 3, 4, 5, 6, 7, 8],
+    preview: [
+      1, 6, 2, 4, // CASCO · Appetizing · технологии · The Best Burger
+      5, 3, 8, 7, // доставка · скидка 10% · Shrimps · Whopper
+    ],
   },
   {
     id: "ai-models", category: "AI, Product", title: "AI Models", year: "2026",
@@ -146,15 +148,15 @@ window.PROJECTS = [
       "Everyday observations from Armenia: architecture, landscapes, markets and people. " +
       "Black-and-white frames sit next to bright food still lifes — a personal archive that often feeds my poster work.",
     credits: [],
-    media: numbered("photo", 8),
+    // 1–8 — первые фото; 9, 10 — триптихи (ягоды, горы, гриб / грибы); 11 — белые грибы; 12 — оранжевые грибы
+    media: numbered("photo", 12),
     // Композиция на главной — как в макете (центр x, y и размер ячейки w×h в пикселях макета 1030×900).
     // Фото обрезается под свою ячейку.
-    // [TODO] Ячейки 3 и 4 в макете — фото с грибами; их пока нет, стоят гранаты (5) и семена (7).
     previewLayout: [
       { n: 3, x: 132, y: 215, w: 211, h: 407 }, // изогнутое здание
       { n: 6, x: 433, y: 105, w: 368, h: 186 }, // машина у деревьев
-      { n: 5, x: 432, y: 315, w: 371, h: 208 }, // [грибы оранжевые] — пока гранаты
-      { n: 7, x: 821, y: 93, w: 358, h: 148 },  // [грибы белые] — пока семена
+      { n: 12, x: 432, y: 315, w: 371, h: 208 }, // оранжевые грибы на бревне
+      { n: 11, x: 821, y: 93, w: 358, h: 148 },  // белые грибы на камне
       { n: 1, x: 821, y: 291, w: 358, h: 229 }, // волейбол
       { n: 8, x: 321, y: 525, w: 588, h: 182 }, // скульптура
       { n: 2, x: 321, y: 763, w: 588, h: 255 }, // перцы и базилик
@@ -169,10 +171,10 @@ window.PROJECTS = [
     previewVideo: "assets/branding/metro-logo.mp4",
     previewPoster: "assets/branding/metro-logo-poster.jpg",
     description:
-      "Two identity projects. Gym & Box — a fitness brand whose identity reflects strength and precision " +
-      "through geometric patterns, applied consistently from apparel to accessories (work project, 4 weeks). " +
-      "Yerevan Metro — a subway identity built on clarity and easy navigation: minimalist typography, " +
-      "a bold primary color palette and geometric shapes for a modern, user-friendly system (university project, 4 weeks).",
+      "Two identity projects: Gym & Box, a fitness brand built around strength and precision, " +
+      "with geometric patterns applied across apparel and accessories. " +
+      "Yerevan Metro, a university project focused on making public transport more accessible " +
+      "through clear typography, bold colors, and simple geometric elements.",
     credits: [],
     media: [
       // Gym & Box
@@ -191,9 +193,8 @@ window.PROJECTS = [
     previewVideo: "assets/anim/01.mp4",
     previewPoster: "assets/anim/01-poster.jpg",
     description:
-      "Animated posters and short motion pieces for social media. Static Armenian imagery — a sculpture by the lake, " +
-      "an ornamented manhole cover, the Zvartnots tower, a modernist facade, lavash and a game of nardi — " +
-      "comes alive with hand-drawn lines, color accents and kinetic typography.",
+      "A series of motion design experiments inspired by Armenian culture and art, combining traditional visual elements, " +
+      "mixed media, and animation techniques using After Effects.",
     credits: [],
     // Порядок роликов (номера файлов из assets/anim/).
     // 1 и 7 — невысокие, поэтому лежат в одной ячейке (stack): белое видео 7 — под первым роликом.
@@ -213,9 +214,10 @@ window.PROJECTS = [
     previewVideo: "assets/ararat73/intro.mp4",
     previewPoster: "assets/ararat73/intro-poster.jpg",
     description:
-      "Film poster and ticket design for “Ararat ’73”, a film dedicated to the football legend Nikita Simonyan. " +
-      "The identity is built around a heavy gold 3D Armenian title set against stadium lights and the team in blue. " +
-      "The design was featured at Kino Moskva in Yerevan — on the facade banners, posters and the cinema tickets.",
+      "Film poster and ticket design for Ararat ’73, dedicated to football legend Nikita Simonyan. " +
+      "The design features a bold 3D gold Armenian title, stadium lights, and the team in blue. " +
+      "The artwork was displayed on banners and posters at Kino Moscow, one of Yerevan’s largest cinemas, " +
+      "and featured on cinema tickets.",
     credits: [],
     media: [
       { type: "video", src: "assets/ararat73/intro.mp4", poster: "assets/ararat73/intro-poster.jpg" },
@@ -247,14 +249,14 @@ window.PROJECTS = [
   },
   {
     id: "coffee-postcard", category: "Illustration, Print", title: "Coffee Postcard", year: "2026",
-    cover: "assets/coffee/01.jpg",
+    cover: "assets/coffee/04-postcard.png",
     background: "#ffffff", // белый — как скатерть на фотографиях
     // На странице проекта — «каменная кладка»: работы очень разной формы, так меньше пустых мест
     pageLayout: "masonry",
     description:
-      "A postcard about the ritual of coffee at home. Armenian lettering is cut out like paper, " +
-      "two hand-drawn cups sit on a striped pink table against a deep blue background. " +
-      "The printed card is photographed on a real table among cups of coffee, fruit and homemade pastries.",
+      "Illustration inspired by Armenian coffee culture, celebrating the tradition of sharing coffee and connecting with others. " +
+      "The project includes a postcard series and a promotional video, combining illustration and visual storytelling " +
+      "to bring this everyday ritual to life.",
     credits: [],
     media: [
       img("coffee/01.jpg"),               // стол сверху: фрукты, выпечка, две чашки
@@ -265,12 +267,8 @@ window.PROJECTS = [
       img("coffee/04-postcard.png"),      // сама открытка
       img("coffee/05-sheet.png"),         // лист: надписи синим и розовым, открытка, чашки на синем
     ],
-    // Композиция на главной — как в макете (центр x, y и ячейка w×h в пикселях макета 1920×1080):
-    // два горизонтальных кадра слева одно под другим, вертикальный — справа.
-    previewLayout: [
-      { n: 1, x: 694, y: 313, w: 765, h: 430 },
-      { n: 3, x: 694, y: 766, w: 765, h: 429 },
-      { n: 2, x: 1359, y: 539, w: 497, h: 883 },
-    ],
+    // На главной — только сама открытка (5-я работа в media), по центру панели.
+    previewLayout: [{ n: 5, x: 0, y: 0, w: 100 }],
+    previewScale: 0.72, // открытка занимает ~72% панели, вокруг остаётся воздух
   },
 ];
