@@ -306,6 +306,12 @@ body.project { background: var(--black); color: var(--white); }
 .media-grid .item {
   translate: 0 var(--shift, 0%); /* каждая вторая колонка опущена */
 }
+/* Несколько работ в одной ячейке — одна под другой */
+.item-stack {
+  display: flex;
+  flex-direction: column;
+  gap: max(12px, 1.4vw);
+}
 .media-grid .item img,
 .media-grid .item video {
   width: 100%;

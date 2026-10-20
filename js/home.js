@@ -40,6 +40,10 @@
     `<p class="intro-hello">${helloHtml}</p>`,
     ...about.map((line) => `<p>${line}</p>`),
     `<p class="intro-contact">E-mail: <a class="intro-link" href="mailto:${site.email}">${site.email}</a></p>`,
+    // Instagram: показываем ник из ссылки (@bzbz.design), открывается в новой вкладке
+    ...(site.instagram
+      ? [`<p>Instagram: <a class="intro-link" href="${site.instagram}" target="_blank" rel="noopener">@${site.instagram.replace(/\/+$/, "").split("/").pop()}</a></p>`]
+      : []),
     `<p><a class="intro-link" href="${site.cvUrl}" download="${site.cvFileName}">Download CV</a></p>`,
   ];
   // --i — номер строки, чтобы строки появлялись по очереди

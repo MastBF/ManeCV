@@ -23,6 +23,7 @@ window.SITE = {
   previewChaos: 0.6,
   // В самом резюме (PDF) почта написана как mane.sahradian.y@gmail.com — проверить, какая верная
   email: "mane.sahradyan.y@gmail.com",
+  instagram: "https://www.instagram.com/bzbz.design/",
   // Резюме: чтобы обновить, замени файл assets/cv.pdf новым (с тем же именем).
   cvUrl: "assets/cv.pdf",
   cvFileName: "Mane-Sahradyan-CV.pdf", // под этим именем файл сохранится у посетителя
@@ -45,30 +46,6 @@ const SMM_ORDER = [
 // [TODO] Годы и описания ниже — черновики. Поправь их под реальные факты.
 window.PROJECTS = [
   {
-    id: "lexus-burger-king", category: "Social Media, Ads", title: "Ads", year: "2026",
-    cover: "assets/ads/01.jpg",
-    background: "#2d2c2c", // тёмный графит — синий Lexus и красно-оранжевый Burger King на нём особенно яркие
-    // Если добавить featured: true, проект будет открыт слева сразу при входе на сайт.
-    // На главной — лента 4×2: верхний ряд Lexus и первый пост Burger King, нижний — Burger King
-    previewPack: 4,
-    preview: [1, 2, 3, 4, 5, 6, 7, 8],
-    description:
-      "Social media posts for Lexus Yerevan and Burger King. For Lexus — a calm, premium visual language: " +
-      "CASCO insurance, safety technologies and a service offer on brake parts. For Burger King — bold, playful " +
-      "typography in the brand’s warm palette: the Whopper, shrimps, “The Best Burger” and delivery partners.",
-    credits: [],
-    media: [
-      img("ads/01.jpg"), // Lexus — CASCO
-      img("ads/02.jpg"), // Lexus — технологии безопасности
-      img("ads/03.jpg"), // Lexus — скидка 10% на тормозные детали
-      img("ads/04.jpg"), // Burger King — The Best Burger
-      img("ads/05.jpg"), // Burger King — доставка
-      img("ads/06.jpg"), // Burger King — Appetizing
-      img("ads/07.jpg"), // Burger King — Whopper
-      img("ads/08.jpg"), // Burger King — Shrimps
-    ],
-  },
-  {
     id: "posters", category: "Poster", title: "Posters", year: "2026",
     cover: "assets/posters/arshaluys.jpg",
     background: "#2d2c2c", // тёмный графит — красно-чёрно-белые постеры на нём звучат сильнее
@@ -80,32 +57,42 @@ window.PROJECTS = [
     media: [
       "arshaluys", "rossia-cinema", "gyumri", "zvartnots", "lernayin-par",
       "mer-sarere", "remember", "ararat", "tolma", "uno-cards",
+      "polytech", // кадр из анимации «Политех» (assets/anim/04.mp4)
     ].map((name) => img(`posters/${name}.jpg`)),
+    // На главной при наведении — лента 5×2 (номера работ в media выше, слева направо, сверху вниз)
+    previewPack: 5,
+    preview: [
+      2, 9, 3, 7, 11, // Rossia Cinema · Make Tolma Not War · Gyumri · Remember · Политех
+      8, 1, 6, 4, 5,  // Ararat · Arshaluys · Мер сарере · [TODO: постер «ՋՈՒՐ» — пока Zvartnots] · Лернайин пар
+    ],
   },
   {
     id: "smm", category: "Social Media", title: "SMM", year: "2026",
-    cover: "assets/smm/01.jpg",
-    background: "#ffffff", // белый — яркие ленты брендов на нём читаются чище
-    chaos: 0.85, // посты разбросаны, как ленты в телефоне
+    cover: "assets/ads/01.jpg",
+    background: "#2d2c2c", // тёмный графит — синий Lexus и красно-оранжевый Burger King на нём особенно яркие
     description:
-      "Social media design for brands from different industries: Manor Matrix (data and outsourcing), " +
-      "Rafael and iMachinery (construction machinery), Meranjson (children’s clothing) and Innwork (coworking). " +
+      "Social media design for brands from different industries: Lexus Yerevan and Burger King, " +
+      "Manor Matrix (data and outsourcing), Rafael and iMachinery (construction machinery), " +
+      "Meranjson (children’s clothing) and Innwork (coworking). " +
       "For each brand I built a recognizable feed with its own grid, typography and color system, " +
       "and designed posts, announcements and promotional campaigns in Armenian and English.",
     credits: [],
-    // Порядок на странице проекта (номера файлов из assets/smm/).
-    // Крупные работы идут по одной, маленькие (низкое разрешение) стоят подряд —
-    // сайт сам собирает их в ряды по несколько штук.
-    media: SMM_ORDER.map((n) => img(`smm/${String(n).padStart(2, "0")}.jpg`)),
-    // На главной при наведении — лента Innwork, собранная из отдельных постов в «пак» 3×3,
-    // в том же порядке, что и в Instagram (номера файлов, слева направо, сверху вниз).
-    // На странице проекта остаются все 39.
-    previewPack: 3,
-    preview: [
-      34, 36, 31, // календарь · «Your new work address» · Coworking
-      37, 35, 32, // 9% · записка в офисе · оранжевая карточка
-      38, 33, 39, // «Hetq» · оранжевая линия · девушка с папками
-    ].map((n) => SMM_ORDER.indexOf(n) + 1),
+    // Порядок на странице проекта: сначала Lexus и Burger King (assets/ads/),
+    // дальше остальные бренды (номера файлов из assets/smm/ — см. SMM_ORDER выше).
+    media: [
+      img("ads/01.jpg"), // Lexus — CASCO
+      img("ads/02.jpg"), // Lexus — технологии безопасности
+      img("ads/03.jpg"), // Lexus — скидка 10% на тормозные детали
+      img("ads/04.jpg"), // Burger King — The Best Burger
+      img("ads/05.jpg"), // Burger King — доставка
+      img("ads/06.jpg"), // Burger King — Appetizing
+      img("ads/07.jpg"), // Burger King — Whopper
+      img("ads/08.jpg"), // Burger King — Shrimps
+      ...SMM_ORDER.map((n) => img(`smm/${String(n).padStart(2, "0")}.jpg`)),
+    ],
+    // На главной при наведении — лента 4×2 из постов Lexus и Burger King (первые 8 работ выше).
+    previewPack: 4,
+    preview: [1, 2, 3, 4, 5, 6, 7, 8],
   },
   {
     id: "ai-models", category: "AI, Product", title: "AI Models", year: "2026",
@@ -206,10 +193,14 @@ window.PROJECTS = [
       "an ornamented manhole cover, the Zvartnots tower, a modernist facade, lavash and a game of nardi — " +
       "comes alive with hand-drawn lines, color accents and kinetic typography.",
     credits: [],
-    media: [1, 2, 3, 4, 5, 6].map((n) => ({
+    // Порядок роликов (номера файлов из assets/anim/).
+    // 1 и 7 — невысокие, поэтому лежат в одной ячейке (stack): белое видео 7 — под первым роликом.
+    // 8 — вертикальный, стоит в конце рядом с остальными роликами формата Reels.
+    media: [1, 7, 2, 3, 4, 5, 6, 8].map((n) => ({
       type: "video",
       src: `assets/anim/${String(n).padStart(2, "0")}.mp4`,
       poster: `assets/anim/${String(n).padStart(2, "0")}-poster.jpg`,
+      ...(n === 1 || n === 7 ? { stack: "top" } : {}),
     })),
   },
   {

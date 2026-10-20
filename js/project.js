@@ -72,13 +72,25 @@
   // Полный размер — по клику, в просмотре на весь экран.
   const grid = document.createElement("div");
   grid.className = "media-grid";
-  figures.forEach((f) => grid.appendChild(f));
+  // Работы с одинаковым stack в data.js лежат в одной ячейке, одна под другой
+  // (например, два невысоких ролика занимают место одного вертикального)
+  const stacks = {};
+  figures.forEach((f, i) => {
+    const key = p.media[i].stack;
+    if (!key) return grid.appendChild(f);
+    if (!stacks[key]) {
+      stacks[key] = document.createElement("div");
+      stacks[key].className = "item-stack";
+      grid.appendChild(stacks[key]);
+    }
+    stacks[key].appendChild(f);
+  });
   media.appendChild(grid);
 
   // Ступеньки: каждая вторая колонка сетки опущена вниз
   function stagger() {
     const cols = getComputedStyle(grid).gridTemplateColumns.split(" ").length;
-    figures.forEach((f, i) => {
+    [...grid.children].forEach((f, i) => {
       const col = i % cols;
       f.style.setProperty("--shift", cols > 1 && col % 2 === 1 ? "18%" : "0%");
       f.style.setProperty("--d", `${(col * 0.08).toFixed(2)}s`); // волна при появлении
