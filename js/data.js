@@ -148,8 +148,9 @@ window.PROJECTS = [
       "Everyday observations from Armenia: architecture, landscapes, markets and people. " +
       "Black-and-white frames sit next to bright food still lifes — a personal archive that often feeds my poster work.",
     credits: [],
-    // 1–8 — первые фото; 9, 10 — триптихи (ягоды, горы, гриб / грибы); 11 — белые грибы; 12 — оранжевые грибы
-    media: numbered("photo", 12),
+    // 1–8 — первые фото; 9, 10 — триптихи (ягоды, горы, гриб / грибы); 11 — белые грибы; 12 — оранжевые грибы;
+    // 13 — руки раскатывают тесто (ч/б)
+    media: numbered("photo", 13),
     // Композиция на главной — как в макете (центр x, y и размер ячейки w×h в пикселях макета 1030×900).
     // Фото обрезается под свою ячейку.
     previewLayout: [

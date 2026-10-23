@@ -68,6 +68,7 @@ window.IMAGE_SIZES = {
   "assets/photo/10.jpg": [901, 1280],
   "assets/photo/11.jpg": [613, 344],
   "assets/photo/12.jpg": [372, 209],
+  "assets/photo/13.jpg": [744, 1280],
   "assets/posters/ararat.jpg": [1080, 1350],
   "assets/posters/arshaluys.jpg": [1080, 1350],
   "assets/posters/gyumri.jpg": [1080, 1350],
